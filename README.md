@@ -1,6 +1,6 @@
 # agent-skills-world
 
-TypeScript runtime for persistent celebrity skills:
+TypeScript runtime for persistent celebrity skills, single-celebrity dialogue, and multi-celebrity advisory boards:
 
 - `Nuwa` creates the initial celebrity directory and canon
 - `Hermes` acts as an adapter that writes session memory and relationship memory
@@ -99,6 +99,67 @@ world/
 - `Hermes` is not the center of the system; it is a host adapter that calls the CLI
 - `Darwin` reads archived evidence and proposes or promotes safe patches
 - Markdown files remain the truth source, while SQLite is a fast local index
+
+## Product Overview
+
+```mermaid
+flowchart LR
+    User["User"] --> Host["Hermes / CLI / Future Host"]
+    Host --> World["agent-skills-world"]
+    World --> Celebrity["Persistent Celebrity"]
+    World --> Board["Celebrity Board"]
+    World --> Darwin["Darwin Evolution"]
+
+    Celebrity --> Canon["Stable Canon"]
+    Celebrity --> Memory["Relationship + Session Memory"]
+    Board --> BoardMemory["Board Session + Member Carryover"]
+    Darwin --> Version["Versioned Patches"]
+    Version --> Canon
+```
+
+## Current Product Surface
+
+The latest host experience built on top of this engine is a cinematic interface
+called `名人世界`.
+
+- `Immersive landing page`: a starfield portal frames the experience as entering
+  a world of cross-era minds instead of opening a plain chat box.
+- `Celebrity constellation`: users browse floating celebrity cards across
+  philosophy, physics, chemistry, strategy, education, innovation, and
+  art-science.
+- `Single-celebrity dialogue`: selecting one celebrity opens a dedicated chat
+  thread with persistent identity, voice, and relationship memory.
+- `Multi-select board mode`: users can choose several celebrities at once and
+  assemble a `智囊团` before asking a question.
+- `Board consultation`: the board opens as one shared room with a synthesized
+  kickoff while preserving each member's own canon, board role, and carryover
+  memory.
+
+This matters because the repo is no longer best explained as just a CLI. It now
+cleanly supports a product surface where one user can:
+
+- talk to one historical expert in a persistent 1:1 session
+- assemble several experts into a board for comparative advice
+- carry session evidence back into memory and Darwin evolution after the chat
+
+## UI to Runtime Mapping
+
+The front-end flow shown above maps directly onto the world engine primitives in
+this repo:
+
+- `Enter World` / choose a celebrity: host calls `context load` to assemble the
+  minimum canon and memory slices needed for the prompt.
+- `Ask a celebrity`: host appends each exchange with `chat log-turn`, then
+  persists summaries, relationship memory, and Darwin candidates through
+  `chat finalize`.
+- `Select multiple celebrities`: host creates or reuses a board whose members
+  live under `world/boards/<boardId>/`.
+- `Start consultation`: host calls `board convene` to assemble member contexts
+  into one board prompt block.
+- `Finish board consultation`: host calls `board finalize` to write board
+  synthesis, member contributions, and per-member board memory carryover.
+- `Long-term improvement`: Darwin evaluates repeated evidence and promotes safe
+  canon patches without letting one chat rewrite identity inline.
 
 ## Core Diagram
 

@@ -8,6 +8,50 @@ Hermes is only a runtime adapter. The real source of truth remains the
 markdown world plus the TypeScript core that manages loading, memory, and
 Darwin-style evolution.
 
+## Product Overview
+
+```mermaid
+flowchart TB
+    User["User"]
+    Hermes["Hermes / Any Host"]
+    World["agent-skills-world"]
+    Nuwa["Nuwa\ncreate celebrity canon"]
+    Runtime["Runtime\nprogressive loading + response context"]
+    Memory["Memory\nmarkdown-first episodic + relationship + board memory"]
+    Darwin["Darwin\ncandidate extraction + evaluation + promotion"]
+    Board["Advisory Board\nmulti-celebrity deliberation"]
+
+    subgraph Celebrity["Persistent Celebrity"]
+      Canon["Stable Canon\nidentity / boundaries / board-role / lenses"]
+      Sessions["Session Memory\ntranscripts + summaries"]
+      Relationship["Relationship Memory\nuser-specific continuity"]
+      BoardCarry["Board Memory\nmember-specific carryover"]
+      Versions["Versioned Evolution\npatches + changelog"]
+    end
+
+    User --> Hermes
+    Hermes --> World
+
+    World --> Nuwa
+    World --> Runtime
+    World --> Memory
+    World --> Darwin
+    World --> Board
+
+    Nuwa --> Canon
+    Runtime --> Canon
+    Runtime --> Sessions
+    Runtime --> Relationship
+    Runtime --> BoardCarry
+    Board --> BoardCarry
+    Memory --> Sessions
+    Memory --> Relationship
+    Darwin --> Versions
+    Versions --> Canon
+
+    Canon -->|"next session loads evolved self"| Runtime
+```
+
 ## Core Design
 
 ```mermaid
@@ -150,3 +194,14 @@ sequenceDiagram
   are stored separately to avoid cross-contamination.
 - `Hermes is an adapter`: the world engine stays independent of the runtime
   host.
+
+## What This Means Product-Wise
+
+- `Any celebrity can persist`: each celebrity is a durable directory, not a
+  temporary prompt.
+- `Any celebrity can evolve`: post-chat evidence creates Darwin candidates
+  instead of rewriting canon inline.
+- `Any celebrity can join a board`: board memory is shared at the board level
+  and also carried back into each member's own memory.
+- `Any runtime can host it`: Hermes is one adapter today, but the core world
+  engine stays reusable for CLI, HTTP, or future hosts.
