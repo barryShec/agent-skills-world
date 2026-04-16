@@ -1,0 +1,22 @@
+{
+  "name": "agent-skills-world",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "TypeScript celebrity skill world with markdown memory, SQLite indexing, Darwin evolution, and progressive skill loading.",
+  "bin": {
+    "agent-skills-world": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "bootstrap": "tsx src/cli.ts bootstrap",
+    "world": "tsx src/cli.ts",
+    "test": "node --test --import tsx tests/**/*.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  }
+}
+
